@@ -1,0 +1,191 @@
+/* Design tokens, reset, typography and the ambient backdrop. */
+
+:root {
+  /* palette */
+  --leaf: #a5c89a;
+  --fern: #7ea674;
+  --forest: #1d2e28;
+  --mist: #e0e8eb;
+  --moss: #677a65;
+  --pine: #3c5046;
+  --spruce: #49634f;
+  --lichen: #7b9a9b;
+  --slate: #4a625a;
+  --night: #15221d; /* page base: a shade under --forest so the palette's darks can glow */
+  --straw: #e6d28a; /* warm counterpoint used only for data (strands, large distances) */
+  --coral: #e58b6b;
+
+  /* text on dark */
+  --ink: rgba(232, 239, 240, 0.95);
+  --ink-2: rgba(224, 232, 235, 0.72);
+  --ink-3: rgba(224, 232, 235, 0.56);
+  --line: rgba(224, 232, 235, 0.12);
+
+  /* type */
+  --font-display: 'Iowan Old Style', 'Palatino Nova', 'Palatino Linotype', Palatino, 'TeX Gyre Pagella', 'Book Antiqua', Georgia, serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, 'DejaVu Sans Mono', Consolas, monospace;
+
+  /* shape and motion */
+  --radius-panel: 26px;
+  --radius-card: 22px;
+  --radius-control: 14px;
+  --ease: cubic-bezier(0.22, 0.9, 0.3, 1);
+  --spring: cubic-bezier(0.34, 1.45, 0.5, 1);
+  --page-pad: clamp(18px, 4vw, 56px);
+  --nav-height: 68px;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+dl,
+dd {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: rgba(165, 200, 154, 0.35);
+}
+
+:focus-visible {
+  outline: 2px solid var(--leaf);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.icon {
+  flex: none;
+}
+
+/* ---------------------------------------------------------------- backdrop */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% -10%, #22362e 0%, transparent 60%),
+    linear-gradient(180deg, #16241f 0%, #111c18 100%);
+}
+
+.backdrop-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+  animation: drift 46s ease-in-out infinite alternate;
+}
+
+.backdrop-glow-a {
+  width: 52vw;
+  height: 52vw;
+  left: -14vw;
+  top: -22vw;
+  background: rgba(126, 166, 116, 0.34);
+}
+
+.backdrop-glow-b {
+  width: 44vw;
+  height: 44vw;
+  right: -10vw;
+  top: 8vh;
+  background: rgba(123, 154, 155, 0.3);
+  animation-duration: 58s;
+  animation-delay: -20s;
+}
+
+.backdrop-glow-c {
+  width: 60vw;
+  height: 46vw;
+  left: 22vw;
+  bottom: -30vw;
+  background: rgba(73, 99, 79, 0.62);
+  animation-duration: 70s;
+  animation-delay: -35s;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(-3vw, -2vh, 0) scale(1);
+  }
+  to {
+    transform: translate3d(5vw, 4vh, 0) scale(1.14);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop-glow {
+    animation: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
