@@ -1,3 +1,8 @@
+# Disclaimer
+
+This web application is vibe-coded and is built solely for the purpose of testing the capabilities
+of current AI models.
+
 # Structura
 
 Search the RCSB Protein Data Bank, open any structure in 3D, and compare two structures by
